@@ -1,0 +1,383 @@
+---------------------------------------------------------
+---------------------------------------------------------
+---------------------------------------------------------
+1. generate username
+git config --global user.name "rea*im"
+2. generate email
+git config --global user.email "sha*un1*8@outlook.com"
+3. generate key
+ssh-keygen -t rsa -b 4096 -C "sha*un1*8@outlook.com"
+4. copy key
+clip < ~/.ssh/id_rsa.pub
+5. paste key
+login github, add the key to SSH in profile
+6. Test (attention: git@github, not rea*im@gihub)
+ssh -T git@github.com
+:Hi rea*im! You've successfully authenticated, but GitHub does not provide shell access.
+
+7. clone(download) for new(1st) time:
+a. git init
+b. git clone git@github.com:readyaim/TB_formula.git
+
+8. upload for first time
+a. creat a repo in github.com
+b. git init
+c .git add .
+d. git commit -m "new"
+e. git remote add origin git@github.com:readyaim/AVR_test_128A.git
+f. git push -u origin master
+
+9. download for 2nd time or after
+git remote add origin git@github.com:readyaim/TB_formula.git
+git pull origin master
+
+
+二、生成SSH密钥过程：
+1.查看是否已经有了ssh密钥：cd ~/.ssh
+如果没有密钥则不会有此文件夹，有则备份删除
+2.生存密钥：
+    $ ssh-keygen -t rsa
+    #ssh-keygen -t rsa -C “shangzhun1978@outlook.com"
+---------------------------------------------------------
+Testing your SSH connection
+MAC WINDOWS LINUX
+After you've set up your SSH key and added it to your GitHub account, you can test your connection.
+
+Before testing your SSH connection, you should have:
+
+Checked for existing SSH keys
+Generated a new SSH key
+Added a new SSH key to your GitHub account
+When you test your connection, you'll need to authenticate this action using your password, which is the SSH key passphrase you created earlier. For more information on working with SSH key passphrases, see "Working with SSH key passphrases".
+
+1.Open Git Bash.
+
+2.Enter the following:
+ssh -T git@github.com
+# Attempts to ssh to GitHub
+You may see a warning like this:
+
+The authenticity of host 'github.com (IP ADDRESS)' can't be established.
+RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
+Are you sure you want to continue connecting (yes/no)?
+or like this:
+
+The authenticity of host 'github.com (IP ADDRESS)' can't be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no)?
+Verify that the fingerprint in the message you see matches one of the messages in step 2, then type yes:
+
+Hi username! You've successfully authenticated, but GitHub does not
+provide shell access.
+Verify that the resulting message contains your username. If you receive a "permission denied" message, see "Error: Permission denied (publickey)".
+---------------------------------------------------------
+Open Git Bash.
+
+Paste the text below, substituting in your GitHub email address.
+
+ssh-keygen -t rsa -b 4096 -C "shangzhun1978@outlook.com"
+This creates a new ssh key, using the provided email as a label.
+
+Generating public/private rsa key pair.
+When you're prompted to "Enter a file in which to save the key," press Enter. This accepts the default file location.
+
+ Enter a file in which to save the key (/c/Users/you/.ssh/id_rsa):[Press enter]
+At the prompt, type a secure passphrase. For more information, see "Working with SSH key passphrases".
+Enter passphrase (empty for no passphrase): [Type a passphrase]
+Enter same passphrase again: [Type passphras
+---------------------------------------------------------
+从远程服务器克隆一个一模一样的版本库到本地,复制的是整个版本库，叫做clone.（clone是将一个库复制到你的本地，是一个本地从无到有的过程）
+从远程服务器获取到一个branch分支的更新到本地，并更新本地库，叫做pull.（pull是指同步一个在你本地有版本的库内容更新的部分到你的本地库）
+git pull相当于是从远程获取最新版本并merge（合并）到本地     git pull = git fetch + git merge，git fetch更安全一些
+git clone是远程操作的第一步，通常是从远程主机克隆一个版本库，eg:$ git clone ##   该命令会在本地主机生成一个目录，与远程主机的版本库同名，如果要是制定不同的目录名，可以将目录名作为git clone 命令的第二个参数。eg：$ git clone #版本库网址# #本地目录名#     git clone支持多种协议，除了http（s),还有ssh,git,本地协议。
+git pull 作用是，取回远程主机某个分支的更新，再与本地的指定分支合并。它的完整格式稍稍有点复杂。eg:$ git pull ##远程主机（origin） #远程分之(next)#：#本地分之(master)#
+如果远程分支是与当前分支合并，则冒号后面的部分可以省略。eg:$ git pull #远程主机(origin)#　 #远程分之(next)#　相当于1. $ git fetch origin   2.$git merge origin/next 
+在某些场合，git会自动在本地和远程分之之间，建立一种追踪关系。比如，在git clone 的时候，所有本地分之默认与远程主机的同名分之，建立追踪关系，也就是，本地的master分之自动“追踪”origin/master分之。git 可以手动建立追踪， git branch --set-upstream master origin/next   --->指定master分之追踪到origin/next。
+如果当前分支只有一个追踪分支，连远程主机名都可以省略。$ git pull  表示当前分之自动与唯一一个追踪分之进行合并。
+---------------------------------------------------------
+一、git pull
+git pull命令的作用是，取回远程主机某个分支的更新，再与本地的指定分支合并。
+
+完整格式：$ git pull <远程主机名> <远程分支名>:<本地分支名>
+
+完整格式举例：比如，取回origin主机的next分支，与本地的master分支合并，需要写成下面这样，
+（1）$ git pull origin next:master：如果远程分支是与当前分支合并，则冒号后面的部分可以省略。
+（2）$ git pull origin next：上面命令表示，取回origin/next分支，再与当前分支合并。实质上，这等同于先做git fetch，再做git merge。
+$ git fetch origin
+$ git merge origin/next
+
+在某些场合，Git会自动在本地分支与远程分支之间，建立一种追踪关系(tracking)。比如，在git clone的时候，所有本地分支默认与远程主机的同名分支，建立追踪关系，也就是说，本地的master分支自动”追踪”origin/master分支。
+
+Git也允许手动建立追踪关系，git branch --set-upstream master origin/next
+上面命令指定master分支追踪origin/next分支。如果当前分支与远程分支存在追踪关系，git pull就可以省略远程分支名。
+
+$ git pull origin
+上面命令表示，本地的当前分支自动与对应的origin主机”追踪分支”(remote-tracking branch)进行合并。
+如果当前分支只有一个追踪分支，连远程主机名都可以省略。
+
+二、get clone
+远程操作的第一步，通常是从远程主机克隆一个版本库，这时就要用到git clone命令。
+（1）$ git clone <版本库的网址>
+比如，克隆jQuery的版本库。
+$ git clone https://github.com/jquery/jquery.git
+该命令会在本地主机生成一个目录，与远程主机的版本库同名。如果要指定不同的目录名，可以将目录名作为git clone命令的第二个参数。
+（2）$ git clone <版本库的网址> <本地目录名>
+git clone支持多种协议，除了HTTP(s)以外，还支持SSH、Git、本地文件协议等，下面是一些例子。
+$ git clone http[s]://example.com/path/to/repo.git/
+$ git clone ssh://example.com/path/to/repo.git/
+$ git clone git://example.com/path/to/repo.git/
+$ git clone /opt/git/project.git
+$ git clone file:///opt/git/project.git
+$ git clone ftp[s]://example.com/path/to/repo.git/
+$ git clone rsync://example.com/path/to/repo.git/
+（3）SSH协议还有另一种写法。
+$ git clone [user@]example.com:path/to/repo.git/
+通常来说，Git协议下载速度最快，SSH协议用于需要用户认证的场合。
+---------------------------------------------------------
+echo "# TB_fomula" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin git@github.com:readyaim/TB_formula.git
+git push -u origin master
+---------------------------------------------------------
+Github的SSH KEY配置
+144 作者 黑夜之旅
+2014.10.28 03:12 字数 1059 阅读 8586评论 0喜欢 16
+生成SSH Key
+
+    生成SSH KEY: ssh-keygen -t rsa -C "your_email@example.com" , 然后会提示输入公钥的名字， 如果你需要多个SSH-KEY（比如有多个github帐号）就需要在命名的时候区分一下，比如输入"/home/chen/.ssh/xyz_rsa"这样的名字，这样在/home/chen/.ssh/文件夹下生成两个文件: xyz_rsa.pub和xyz_rsa, 分别是你的公钥和私钥.
+
+    生成SSH KEY的时候还要求输入私钥密码"│Enter passphrase (empty for no passphrase):"， 请记住私钥的密码， 下面导入私钥的时候要用到。
+    将SSH 私钥增加到ssh-agent: ssh-add ~/.ssh/xyz_rsa， 这里会提示输入一次私钥的密码;
+    查看已经add的SSH KEY： ssh-add -l；
+    安装xclip(终端到剪切板的工具): sudo yum install xclip , 将公钥内容拷贝到剪切板: xclip -sel clip < ~/.ssh/id_rsa.pub ;
+    浏览器登录自己的github页面, 进入"Account Settings", 再点击左边的"SSH Key"可以看到自己上传过的SSH公钥列表. 再点击"Add SSH Key"新增一个公钥, 直接粘贴即可(上一步已经使用xclip把公钥id_rsa.pub复制到剪切板了)；
+
+测试SSH Key登录
+
+    打开终端, 测试: ssh -T git@github.com;
+    你可能会看到下面的错误信息:
+
+        Agent admitted failure to sign using the key.
+        debug1: No more authentication methods to try.
+        Permission denied (publickey). 
+
+上面的错误在某些Linux发行版（比如我的Fedora 17）是一个已知的错误， 可以忽略。
+然后会看到打印出公钥的指纹，请确认此指纹和你公钥的一致，然后输入"yes"确认。
+
+    " Hi your_name! You've successfully authenticated, but GitHub does not provide shell access." 
+
+如果your_name正确显示你的ID，则说明成功设置了SSH公钥.
+一台机器上管理多个Github帐号的SSH Key
+
+如果你在一台机器使用两个github账号（比如私人账号abc和工作账号xyz），两个帐号用不同的SSH KEY，还需要编辑一下配置文件~/.ssh/config：
+
+Host personal.github.com  
+    HostName github.com  
+    User git  
+    IdentityFile ~/.ssh/personal_rsa  
+
+Host work.github.com  
+    HostName github.com  
+    User git  
+    IdentityFile ~/.ssh/work_rsa
+
+解释此配置文件：
+
+    Host： "personal.github.com"是一个"别名"，可以随意命名, 像github-PERSONAL这样的命名也可以；
+    HostName：比如我工作的git仓储地址是git@code.sohuno.com:username/repo_name.git, 那么我的HostName就要填"sohuno.com"；
+    IdentityFile： 所使用的公钥文件;
+
+配置完毕，用下面的命令测试一下：
+
+ssh -T git@personal.github.com
+ssh -T git@work.github.com
+# 注： @符号后面的"personal.github.com"就是在~/.ssh/config文件中指定的"Host"项
+
+(1)为已经检出的repos指定github账号：
+
+在已经检出的repos目录下执行:
+
+git config  user.name "your-id"
+git config  user.email "your-id@gmail.com"
+
+修改.git/config并找到[remote "origin"],修改url的值为：
+
+[remote "origin"]   
+    url = git@personal.github.com:user_name/repos_name.git
+
+其中, personal.github.com就是在配置文件~/.ssh/config中的Host项, 设置完成后, 在这个工程目录git push会自动以此git帐号提交代码。
+(2)使用指定账号clone已存在的repos:
+
+    使用指定账号clone一个已经存在的repos:
+    git clone git@personal.github.com:user_name/repos_name.git, 上面命令中的"personal.github.com"就是在～/.ssh/config文件中指定的"Host"项, "user_name"是指定提交代码的账户名, 例如:
+
+        git clone git@personal.github.com:whatsdjgpp/Vimrc.git
+        Cloning into 'Vimrc'...
+
+    然后还需要config一下user.name和user.email, 进入repos目录执行:
+
+    git config user.name your_name
+    git config user.email your_email
+
+    以后在此repos下git push origin master就是使用指定的用户push.
+
+(3)使用指定账号init新的repos:
+
+如果是新建一个仓储：在github.com创建一个新repos，
+
+$ git init
+$ git add .
+$ git commit -m "first commit"
+$ git remote add origin git@personal.github.com:user_name/testing.git
+$ git push -u origin master
+(
+$ git remote add origin git@personal.github.com:user_name/testing.git
+$ git pull -u origin master
+)
+
+git clone git@personal.github.com:readyaim/TB_formula.git
+
+上面命令第4行: "personal.github.com"就是在～/.ssh/config文件中指定的"Host"项, "user_name"是指定提交代码的账户名.
+参考：
+
+《Quick Tip: How to Work with GitHub and Multiple Accounts》
+《Multiple SSH Keys settings for different github account》
+《多个github帐号的SSH key切换》
+《GitHub: Generating SSH Keys》
+
+---------------------------------------------------------
+Git是分布式的代码管理工具，远程的代码管理是基于ssh的，所以要使用远程的git则需要ssh的配置。
+github的ssh配置如下：
+一 、
+设置git的user name和email：
+git config --global user.name "readyaim"
+git config --global user.email "shangzhun1978@outlook.com"
+二、生成SSH密钥过程：
+1.查看是否已经有了ssh密钥：cd ~/.ssh
+如果没有密钥则不会有此文件夹，有则备份删除
+2.生存密钥：
+    $ ssh-keygen -t rsa
+    #ssh-keygen -t rsa -C “shangzhun1978@outlook.com"
+    #ssh-keygen -t rsa -C "your_email@youremail.com"
+    按3个回车，密码为空。
+    Your identification has been saved in /home/tekkub/.ssh/id_rsa.
+    Your public key has been saved in /home/tekkub/.ssh/id_rsa.pub.
+    The key fingerprint is:
+    ………………
+最后得到了两个文件：id_rsa和id_rsa.pub
+3.添加密钥到ssh：ssh-add 文件名
+需要之前输入密码。
+4.在github上添加ssh密钥，这要添加的是“id_rsa.pub”里面的公钥。
+打开https://github.com/ ，登陆xuhaiyan825，然后添加ssh。
+5.测试：ssh git@github.com
+    The authenticity of host ‘github.com (207.97.227.239)’ can’t be established.
+    RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
+    Are you sure you want to continue connecting (yes/no)? yes
+    Warning: Permanently added ‘github.com,207.97.227.239′ (RSA) to the list of known hosts.
+    ERROR: Hi tekkub! You’ve successfully authenticated, but GitHub does not provide shell access
+    Connection to github.com closed.
+三、上传代码
+echo "# TB_fomula" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin git@github.com:readyaim/TB_formula.git
+git push -u origin master
+
+四、获取代码(pull= fetch+merge)
+git init
+git remote add origin git@github.com:readyaim/TB_formula.git
+git pull origin master
+
+五、建立clone(clone=fetch, for new repo)
+git clone git@github.com:readyaim/TB_formula.git
+
+六、建立branch
+#新建branch
+git branch fix_bug
+#转到fix_bug分支
+git checkout fix_bug
+#修改文件，并commit
+git -a -m commit "fix bug success"
+#push 到服务器
+git push origin fix_bug
+	#查看本地和远程的分支
+	git branch -a
+	#删除远程分支
+	git push origin --delete fix_bug
+#转到master分支
+git checkout master (此时本地文件恢复到未修改之前)
+#把fix_bug分支merge到master
+git merge fix_bug
+#把master push到服务器
+git push orgin master
+
+三、 开始使用github
+1.获取源码：
+git clone git@github.com:readyaim/github-services.git
+2.这样你的机器上就有一个repo了。
+3.git于svn所不同的是git是分布式的，没有服务器概念。所有的人的机器上都有一个repo，每次提交都是给自己机器的repo
+仓库初始化：
+git init
+生成快照并存入项目索引：
+git add
+文件,还有git rm,git mv等等…
+项目索引提交：
+git commit
+4.协作编程：
+将本地repo于远程的origin的repo合并，
+推送本地更新到远程：
+git push origin master
+更新远程更新到本地：
+git pull origin master
+补充：
+添加远端repo：
+$ git remote add upstream git://github.com/pjhyett/github-services.git
+重命名远端repo：
+$ git://github.com/pjhyett/github-services.git为“upstream”
+---------------------------------------------------------
+Quick setup — if you’ve done this kind of thing before
+or
+We recommend every repository include a README, LICENSE, and .gitignore.
+…or create a new repository on the command line
+
+echo "# TB_fomula" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin git@github.com:readyaim/TB_formula.git
+git push -u origin master
+
+…or push an existing repository from the command line
+
+git remote add origin git@github.com:readyaim/TB_formula.git
+git push -u origin master
+
+…or import code from another repository
+
+You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
+---------------------------------------------------------
+Git中的AutoCRLF与SafeCRLF换行符问题
+最近在使用GitHub，发现不时没有修改过的文件要提交，对比发现文件全部修改，但找不到不一样的地方。
+想可能是换行符的问题，因为Windows和Linux的换行符不一样，而Git默认应该是Linux的，今天Bing了下，果然是这个问题。
+CR回车 LF换行Windows/Dos CRLF \r\n
+Linux/Unix LF \n
+MacOS CR \r
+解决方法是：打开命令行，进行设置，如果你是在Windows下开发，建议设置autocrlf为true。
+2014/08/20 补充：如果你文件编码是UTF8并且包含中文文字，那还是把autocrlf设置为false，并且把所有文件转换为Linux编码（即LF\n），开启safecrlf检查。
+一、AutoCRLF
+#提交时转换为LF，检出时转换为CRLF
+git config --global core.autocrlf true   
+#提交时转换为LF，检出时不转换
+git config --global core.autocrlf input   
+#提交检出均不转换
+git config --global core.autocrlf false
+二、SafeCRLF
+#拒绝提交包含混合换行符的文件
+git config --global core.safecrlf true   
+#允许提交包含混合换行符的文件
+git config --global core.safecrlf false   
+#提交包含混合换行符的文件时给出警告
+git config --global core.safecrlf warn
